@@ -4,40 +4,13 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Undersplore</title>
-  <style>
-    body {
-      margin: 0;
-      overflow: hidden;
-    }
-    canvas {
-      display: block;
-    }
-    #joystick-container {
-      position: absolute;
-      bottom: 20px;
-      left: 20px;
-      z-index: 10;
-    }
-    #joystick-camera {
-      position: absolute;
-      bottom: 20px;
-      right: 20px;
-      z-index: 10;
-    }
-    .joystick {
-      width: 100px;
-      height: 100px;
-      border-radius: 50%;
-      background-color: rgba(255, 255, 255, 0.5);
-    }
-  </style>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div id="joystick-container" class="joystick"></div>
-  <div id="joystick-camera" class="joystick"></div>
-  
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r152/three.min.js"></script>
+  <div id="joystick-left" class="joystick"></div>
+  <div id="joystick-right" class="joystick"></div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r146/three.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/nipplejs@0.9.0/dist/nipplejs.min.js"></script>
-  <script src="game.js"></script>
+  <script src="main.js"></script>
 </body>
 </html>
