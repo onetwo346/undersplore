@@ -1,16 +1,79 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Undersplore</title>
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Undersplore - Underwater Adventure</title>
+    <style>
+        body { margin: 0; overflow: hidden; }
+        canvas { display: block; }
+    </style>
 </head>
 <body>
-  <div id="joystick-left" class="joystick"></div>
-  <div id="joystick-right" class="joystick"></div>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r146/three.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/nipplejs@0.9.0/dist/nipplejs.min.js"></script>
-  <script src="main.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+    <script>
+        // Scene setup
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.body.appendChild(renderer.domElement);
+
+        // Underwater ambiance (blue background)
+        scene.background = new THREE.Color(0x1e90ff); // Deep blue
+
+        // Add a simple "fish" (cube for now)
+        const fishGeometry = new THREE.BoxGeometry(1, 1, 1);
+        const fishMaterial = new THREE.MeshBasicMaterial({ color: 0xff4500 }); // Orange fish
+        const fish = new THREE.Mesh(fishGeometry, fishMaterial);
+        fish.position.set(0, 0, -5);
+        scene.add(fish);
+
+        // Camera starting position
+        camera.position.z = 5;
+
+        // Movement and rotation variables
+        const moveSpeed = 0.1;
+        const rotateSpeed = 0.05;
+        const keys = {};
+
+        // Handle keyboard input
+        document.addEventListener('keydown', (event) => {
+            keys[event.key] = true;
+        });
+        document.addEventListener('keyup', (event) => {
+            keys[event.key] = false;
+        });
+
+        // Animation loop
+        function animate() {
+            requestAnimationFrame(animate);
+
+            // WASD movement
+            if (keys['w']) camera.position.z -= moveSpeed; // Forward
+            if (keys['s']) camera.position.z += moveSpeed; // Backward
+            if (keys['a']) camera.position.x -= moveSpeed; // Left
+            if (keys['d']) camera.position.x += moveSpeed; // Right
+
+            // Arrow key rotation
+            if (keys['ArrowLeft']) camera.rotation.y += rotateSpeed; // Yaw left
+            if (keys['ArrowRight']) camera.rotation.y -= rotateSpeed; // Yaw right
+            if (keys['ArrowUp']) camera.rotation.x += rotateSpeed; // Pitch up
+            if (keys['ArrowDown']) camera.rotation.x -= rotateSpeed; // Pitch down
+
+            // Simple fish movement (swimming effect)
+            fish.position.x = Math.sin(Date.now() * 0.001) * 5;
+
+            renderer.render(scene, camera);
+        }
+        animate();
+
+        // Handle window resize
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+    </script>
 </body>
 </html>
